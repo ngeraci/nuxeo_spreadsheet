@@ -19,16 +19,20 @@ from pynux import utils
 def main(args=None):
     '''Parse command line arguments.'''
     parser = argparse.ArgumentParser(
-        description='''This script allows the users to download metadata from nuxeo and place it
-                       either in a google spreadsheet or tsv file''')
+        description='''This script exports metadata from Nuxeo to a local TSV file or to a Google
+                       Sheets spreadsheet''')
     parser.add_argument(
         'path', nargs=1, help='Nuxeo path')
     parser.add_argument(
-        'level', nargs=1, help='Object Level (ENTER O) or Item Level (ENTER I)')
+        '--object-level', action='store_true', help='get metadata for parent objects only')
     parser.add_argument(
-        'url', nargs=1, help='Google Sheet url')
+        '--item-level', action='store_true', help='''get metadata including child items of complex
+                                                  objects''')
     parser.add_argument(
-        'all_headers', nargs=1, help='All Headers? (Y/N)')
+        '--all-headers', action='store_true', help='''include headers for fields that do not contain
+                                                   data''')
+    parser.add_argument(
+        '--url', type=str, required=False, help='Google Sheets URL')
 
     # print help if no args given
     if len(sys.argv) == 1:
@@ -39,29 +43,29 @@ def main(args=None):
     if args is None:
         args = parser.parse_args()
 
-    if args.level[0].lower() == 'o':
-        if 'http' in args.url[0]:
+    if args.object_level:
+        if args.url:
             try:
-                google_object(args.path[0], args.url[0], args.all_headers[0])
+                google_object(args.path[0], args.url, args.all_headers)
             except:
                 print("""\n*********\nWriting to Google document did not work.
                       Make sure that Google document has been shared with API key email address""")
         else:
-            obj = object_level(args.path[0], args.all_headers[0])
+            obj = object_level(args.path[0], args.all_headers)
             with open(obj['filename'], "wb") as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=obj['fieldnames'], delimiter="\t")
                 writer.writeheader()
                 for row in obj['data']:
                     writer.writerow(row)
-    if args.level[0].lower() == 'i':
-        if 'http' in args.url[0]:
+    if args.item_level:
+        if args.url:
             try:
-                google_item(args.path[0], args.url[0], args.all_headers[0])
+                google_item(args.path[0], args.url, args.all_headers)
             except:
                 print("""\n*********\nWriting to Google document did not work.
                       Make sure that Google document has been shared with API key email address""")
         else:
-            item = item_level(args.path[0], args.all_headers[0])
+            item = item_level(args.path[0], args.all_headers)
             with open(item['filename'], "wb") as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=item['fieldnames'], delimiter="\t")
                 writer.writeheader()
