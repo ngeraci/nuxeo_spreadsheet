@@ -12,8 +12,8 @@ import sys
 import argparse
 import unicodecsv as csv
 import gspread
-from pynux import utils
 from oauth2client.service_account import ServiceAccountCredentials
+from pynux import utils
 
 
 def main(args=None):
@@ -22,9 +22,9 @@ def main(args=None):
         description='''This script allows the users to download metadata from nuxeo and place it
                        either in a google spreadsheet or tsv file''')
     parser.add_argument(
-        'filepath', nargs=1, help='Nuxeo path')
+        'path', nargs=1, help='Nuxeo path')
     parser.add_argument(
-        'choice', nargs=1, help='Object Level (ENTER O) or Item Level (ENTER I)')
+        'level', nargs=1, help='Object Level (ENTER O) or Item Level (ENTER I)')
     parser.add_argument(
         'url', nargs=1, help='Google Sheet url')
     parser.add_argument(
@@ -39,43 +39,41 @@ def main(args=None):
     if args is None:
         args = parser.parse_args()
 
-    if 'O' in args.choice[0] or 'o' in args.choice[0]:
+    if 'O' in args.level[0] or 'o' in args.level[0]:
         if 'http' in args.url[0]:
             try:
-                google_object(args.filepath[0], args.url[
+                google_object(args.path[0], args.url[
                               0], args.all_headers[0])
             except:
                 print("""\n*********\nWriting to Google document did not work.
                       Make sure that Google document has been shared with API key email address""")
         else:
-            obj = object_level(args.filepath[0], args.all_headers[0])
+            obj = object_level(args.path[0], args.all_headers[0])
             with open(obj['filename'], "wb") as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=obj[
-                                        'fieldnames'], delimiter="\t")
+                writer = csv.DictWriter(csvfile, fieldnames=obj['fieldnames'], delimiter="\t")
                 writer.writeheader()
                 for row in obj['data']:
                     writer.writerow(row)
-    if 'I' in args.choice[0] or 'i' in args.choice[0]:
+    if 'I' in args.level[0] or 'i' in args.level[0]:
         if 'http' in args.url[0]:
             try:
-                google_item(args.filepath[0], args.url[0], args.all_headers[0])
+                google_item(args.path[0], args.url[0], args.all_headers[0])
             except:
                 print("""\n*********\nWriting to Google document did not work.
                       Make sure that Google document has been shared with API key email address""")
         else:
-            item = item_level(args.filepath[0], args.all_headers[0])
+            item = item_level(args.path[0], args.all_headers[0])
             with open(item['filename'], "wb") as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=item[
-                                        'fieldnames'], delimiter="\t")
+                writer = csv.DictWriter(csvfile, fieldnames=item['fieldnames'], delimiter="\t")
                 writer.writeheader()
                 for row in item['data']:
                     writer.writerow(row)
 
 
-def object_level(filepath, all_headers):
+def object_level(path, all_headers):
     nx = utils.Nuxeo()
     data = []
-    for n in nx.children(filepath):
+    for n in nx.children(path):
         data2 = {}
 
         get_title(data2, n)
@@ -120,13 +118,13 @@ def object_level(filepath, all_headers):
                 fieldnames.append(key)
 
     return {'fieldnames': fieldnames, 'data': data,
-            'filename': "nuxeo_object_%s.tsv" % nx.get_metadata(path=filepath)['properties']['dc:title']}
+            'filename': "nuxeo_object_%s.tsv" % nx.get_metadata(path=path)['properties']['dc:title']}
 
 
-def item_level(filepath, all_headers):
+def item_level(path, all_headers):
     nx = utils.Nuxeo()
     data = []
-    for n in nx.children(filepath):
+    for n in nx.children(path):
         for x in nx.children(n['path']):
             data2 = {}
             get_title(data2, x)
@@ -170,13 +168,13 @@ def item_level(filepath, all_headers):
                 fieldnames.append(key)
 
     return {'fieldnames': fieldnames, 'data': data,
-            'filename': "nuxeo_item_%s.tsv" % nx.get_metadata(path=filepath)['properties']['dc:title']}
+            'filename': "nuxeo_item_%s.tsv" % nx.get_metadata(path=path)['properties']['dc:title']}
     # returns dictionary with fieldnames, data and filename; This is used for
     # google functions and writing to tsv if google function not choosed
 
 
-def google_object(filepath, url, all_headers):
-    obj = object_level(filepath, all_headers)
+def google_object(path, url, all_headers):
+    obj = object_level(path, all_headers)
     nx = utils.Nuxeo()
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
@@ -193,12 +191,12 @@ def google_object(filepath, url, all_headers):
     sheet_id = client.open_by_url(url).id
     client.import_csv(sheet_id, s)
     client.open_by_key(sheet_id).sheet1.update_title(
-        "nuxeo_object_%s" % nx.get_metadata(path=filepath)['properties']['dc:title'])
+        "nuxeo_object_%s" % nx.get_metadata(path=path)['properties']['dc:title'])
     os.remove("temp.csv")
 
 
-def google_item(filepath, url, all_headers):
-    item = item_level(filepath, all_headers)
+def google_item(path, url, all_headers):
+    item = item_level(path, all_headers)
     nx = utils.Nuxeo()
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
@@ -215,7 +213,7 @@ def google_item(filepath, url, all_headers):
     sheet_id = client.open_by_url(url).id
     client.import_csv(sheet_id, s)  # writes csv file to google sheet
     client.open_by_key(sheet_id).sheet1.update_title(
-        "nuxeo_item_%s" % nx.get_metadata(path=filepath)['properties']['dc:title'])
+        "nuxeo_item_%s" % nx.get_metadata(path=path)['properties']['dc:title'])
     os.remove("temp.csv")  # removes temporary csv
 
 
@@ -223,7 +221,7 @@ def get_title(data2, x):  # gets title
     data2['Title'] = x['properties']['dc:title']
 
 
-def get_filepath(data2, x):  # gets filepath
+def get_filepath(data2, x):  # gets path
     data2['File path'] = x['path']
 
 
