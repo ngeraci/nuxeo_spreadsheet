@@ -20,7 +20,7 @@ def main(args=None):
     '''Parse command line arguments.'''
     parser = argparse.ArgumentParser(
         description='''This script exports metadata from Nuxeo to a local TSV file or to a Google
-                       Sheets spreadsheet''')
+                       Sheets spreadsheet.''')
     parser.add_argument(
         'path', nargs=1, help='Nuxeo path')
     parser.add_argument(
@@ -73,44 +73,48 @@ def main(args=None):
                     writer.writerow(row)
 
 
+def get_metadata(single_path, all_headers):
+    """Get metadata for a single Nuxeo item or object, return as dict."""
+    metadata = {}
+    get_title(metadata, single_path)
+    get_filepath(metadata, single_path)
+    get_type(metadata, single_path, all_headers)
+    get_alt_title(metadata, single_path, all_headers)
+    get_identifier(metadata, single_path, all_headers)
+    get_local_identifier(metadata, single_path, all_headers)
+    get_campus_unit(metadata, single_path, all_headers)
+    get_date(metadata, single_path, all_headers)
+    get_publication(metadata, single_path, all_headers)
+    get_creator(metadata, single_path, all_headers)
+    get_contributor(metadata, single_path, all_headers)
+    get_format(metadata, single_path, all_headers)
+    get_description(metadata, single_path, all_headers)
+    get_extent(metadata, single_path, all_headers)
+    get_language(metadata, single_path, all_headers)
+    get_temporal_coverage(metadata, single_path, all_headers)
+    get_transcription(metadata, single_path, all_headers)
+    get_access_restrictions(metadata, single_path, all_headers)
+    get_rights_statement(metadata, single_path, all_headers)
+    get_rights_status(metadata, single_path, all_headers)
+    get_copyright_holder(metadata, single_path, all_headers)
+    get_copyright_info(metadata, single_path, all_headers)
+    get_collection(metadata, single_path, all_headers)
+    get_related_resource(metadata, single_path, all_headers)
+    get_source(metadata, single_path, all_headers)
+    get_subject_name(metadata, single_path, all_headers)
+    get_place(metadata, single_path, all_headers)
+    get_subject_topic(metadata, single_path, all_headers)
+    get_form_genre(metadata, single_path, all_headers)
+    get_provenance(metadata, single_path, all_headers)
+    get_physical_location(metadata, single_path, all_headers)
+    return metadata
+
+
 def object_level(path, all_headers):
     nx = utils.Nuxeo()
     data = []
     for n in nx.children(path):
-        data2 = {}
-
-        get_title(data2, n)
-        get_filepath(data2, n)
-        get_type(data2, n, all_headers)
-        get_alt_title(data2, n, all_headers)
-        get_identifier(data2, n, all_headers)
-        get_local_identifier(data2, n, all_headers)
-        get_campus_unit(data2, n, all_headers)
-        get_date(data2, n, all_headers)
-        get_publication(data2, n, all_headers)
-        get_creator(data2, n, all_headers)
-        get_contributor(data2, n, all_headers)
-        get_format(data2, n, all_headers)
-        get_description(data2, n, all_headers)
-        get_extent(data2, n, all_headers)
-        get_language(data2, n, all_headers)
-        get_temporal_coverage(data2, n, all_headers)
-        get_transcription(data2, n, all_headers)
-        get_access_restrictions(data2, n, all_headers)
-        get_rights_statement(data2, n, all_headers)
-        get_rights_status(data2, n, all_headers)
-        get_copyright_holder(data2, n, all_headers)
-        get_copyright_info(data2, n, all_headers)
-        get_collection(data2, n, all_headers)
-        get_related_resource(data2, n, all_headers)
-        get_source(data2, n, all_headers)
-        get_subject_name(data2, n, all_headers)
-        get_place(data2, n, all_headers)
-        get_subject_topic(data2, n, all_headers)
-        get_form_genre(data2, n, all_headers)
-        get_provenance(data2, n, all_headers)
-        get_physical_location(data2, n, all_headers)
-
+        data2 = get_metadata(n, all_headers)
         data.append(data2)
 
     # ensures that File path, Title and Type are the first three rows
@@ -127,40 +131,9 @@ def object_level(path, all_headers):
 def item_level(path, all_headers):
     nx = utils.Nuxeo()
     data = []
-    for n in nx.children(path):
+    for obj in nx.children(path):
         for x in nx.children(n['path']):
-            data2 = {}
-            get_title(data2, x)
-            get_filepath(data2, x)
-            get_type(data2, x, all_headers)
-            get_alt_title(data2, x, all_headers)
-            get_identifier(data2, x, all_headers)
-            get_local_identifier(data2, x, all_headers)
-            get_campus_unit(data2, x, all_headers)
-            get_date(data2, x, all_headers)
-            get_publication(data2, x, all_headers)
-            get_creator(data2, x, all_headers)
-            get_contributor(data2, x, all_headers)
-            get_format(data2, x, all_headers)
-            get_description(data2, x, all_headers)
-            get_extent(data2, x, all_headers)
-            get_language(data2, x, all_headers)
-            get_temporal_coverage(data2, x, all_headers)
-            get_transcription(data2, x, all_headers)
-            get_access_restrictions(data2, x, all_headers)
-            get_rights_statement(data2, x, all_headers)
-            get_rights_status(data2, x, all_headers)
-            get_copyright_holder(data2, x, all_headers)
-            get_copyright_info(data2, x, all_headers)
-            get_collection(data2, x, all_headers)
-            get_related_resource(data2, x, all_headers)
-            get_source(data2, x, all_headers)
-            get_subject_name(data2, x, all_headers)
-            get_place(data2, x, all_headers)
-            get_subject_topic(data2, x, all_headers)
-            get_form_genre(data2, x, all_headers)
-            get_provenance(data2, x, all_headers)
-            get_physical_location(data2, x, all_headers)
+            data2 = get_metadata(x, all_headers)
             data.append(data2)
 
     # ensures that File path, Title and Type are the first three rows
@@ -173,7 +146,7 @@ def item_level(path, all_headers):
     return {'fieldnames': fieldnames, 'data': data,
             'filename': "nuxeo_item_%s.tsv" % nx.get_metadata(path=path)['properties']['dc:title']}
     # returns dictionary with fieldnames, data and filename; This is used for
-    # google functions and writing to tsv if google function not choosed
+    # google functions and writing to tsv if google function not chosen
 
 
 def google_object(path, url, all_headers):
@@ -181,8 +154,7 @@ def google_object(path, url, all_headers):
     nx = utils.Nuxeo()
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'client_secret.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
     client = gspread.authorize(creds)
     with open("temp.csv", "wb") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=obj['fieldnames'])
@@ -203,8 +175,7 @@ def google_item(path, url, all_headers):
     nx = utils.Nuxeo()
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'client_secret.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
     client = gspread.authorize(creds)
     with open("temp.csv", "wb") as csvfile:  # creates temporary csv file
         writer = csv.DictWriter(csvfile, fieldnames=item['fieldnames'])
