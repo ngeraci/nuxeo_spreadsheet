@@ -33,6 +33,8 @@ def main(args=None):
                                                    data''')
     parser.add_argument(
         '--url', type=str, required=False, help='Google Sheets URL')
+    parser.add_argument(
+        '--outfile', type=str, required=False, help='local file path to write out to')
 
     # print help if no args given
     if len(sys.argv) == 1:
@@ -52,7 +54,7 @@ def main(args=None):
                       Make sure that Google document has been shared with API key email address""")
         else:
             obj = object_level(args.path[0], args.all_headers)
-            with open(obj['filename'], "wb") as csvfile:
+            with open(args.outfile, "wb") as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=obj['fieldnames'], delimiter="\t")
                 writer.writeheader()
                 for row in obj['data']:
@@ -66,7 +68,7 @@ def main(args=None):
                       Make sure that Google document has been shared with API key email address""")
         else:
             item = item_level(args.path[0], args.all_headers)
-            with open(item['filename'], "wb") as csvfile:
+            with open(args.outfile, "wb") as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=item['fieldnames'], delimiter="\t")
                 writer.writeheader()
                 for row in item['data']:
@@ -124,8 +126,7 @@ def object_level(path, all_headers):
             if key not in fieldnames:
                 fieldnames.append(key)
 
-    return {'fieldnames': fieldnames, 'data': data,
-            'filename': "nuxeo_object_%s.tsv" % nx.get_metadata(path=path)['properties']['dc:title']}
+    return {'fieldnames': fieldnames, 'data': data}
 
 
 def item_level(path, all_headers):
@@ -143,11 +144,7 @@ def item_level(path, all_headers):
             if key not in fieldnames:
                 fieldnames.append(key)
 
-    return {'fieldnames': fieldnames, 'data': data,
-            'filename': "nuxeo_item_%s.tsv" % nx.get_metadata(path=path)['properties']['dc:title']}
-    # returns dictionary with fieldnames, data and filename; This is used for
-    # google functions and writing to tsv if google function not chosen
-
+    return {'fieldnames': fieldnames, 'data': data}
 
 def google_object(path, url, all_headers):
     obj = object_level(path, all_headers)
