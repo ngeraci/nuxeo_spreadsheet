@@ -232,7 +232,7 @@ def get_filepath(data2, x):  # gets path
 def get_type(data2, x, all_headers):
     if x['properties']['ucldc_schema:type']:
         data2['Type'] = x['properties']['ucldc_schema:type']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Type'] = ''
 
 
@@ -246,14 +246,14 @@ def get_alt_title(data2, x, all_headers):
             data2[name] = x['properties'][
                 'ucldc_schema:alternativetitle'][altnumb]
             altnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Alternative Title 1'] = ''
 
 
 def get_identifier(data2, x, all_headers):
     if x['properties']['ucldc_schema:identifier']:
         data2['Identifier'] = x['properties']['ucldc_schema:identifier']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Identifier'] = ''
 
 
@@ -267,7 +267,7 @@ def get_local_identifier(data2, x, all_headers):
             data2[name] = x['properties'][
                 'ucldc_schema:localidentifier'][locnumb]
             locnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Local Identifier 1'] = ''
 
 
@@ -280,7 +280,7 @@ def get_campus_unit(data2, x, all_headers):
             name = 'Campus/Unit %d' % numb
             data2[name] = x['properties']['ucldc_schema:campusunit'][campnumb]
             campnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Campus/Unit 1'] = ''
 
 
@@ -295,7 +295,7 @@ def get_date(data2, x, all_headers):
                 if x['properties']['ucldc_schema:date'][datenumb]['date']:
                     data2[name] = x['properties'][
                         'ucldc_schema:date'][datenumb]['date']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -304,7 +304,7 @@ def get_date(data2, x, all_headers):
                 if x['properties']['ucldc_schema:date'][datenumb]['datetype']:
                     data2[name] = x['properties'][
                         'ucldc_schema:date'][datenumb]['datetype']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -313,7 +313,7 @@ def get_date(data2, x, all_headers):
                 if x['properties']['ucldc_schema:date'][datenumb]['inclusivestart']:
                     data2[name] = x['properties']['ucldc_schema:date'][
                         datenumb]['inclusivestart']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -322,7 +322,7 @@ def get_date(data2, x, all_headers):
                 if x['properties']['ucldc_schema:date'][datenumb]['inclusiveend']:
                     data2[name] = x['properties'][
                         'ucldc_schema:date'][datenumb]['inclusiveend']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -331,12 +331,12 @@ def get_date(data2, x, all_headers):
                 if x['properties']['ucldc_schema:date'][datenumb]['single']:
                     data2[name] = x['properties'][
                         'ucldc_schema:date'][datenumb]['single']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             datenumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Date 1'] = ''
         data2['Date 1 Type'] = ''
         data2['Date 1 Inclusive Start'] = ''
@@ -353,7 +353,7 @@ def get_publication(data2, x, all_headers):
             name = 'Publication/Origination Info %d' % numb
             data2[name] = x['properties']['ucldc_schema:publisher'][pubnumb]
             pubnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Publication/Origination Info 1'] = ''
 
 
@@ -368,7 +368,7 @@ def get_creator(data2, x, all_headers):
                 if x['properties']['ucldc_schema:creator'][creatnumb]['name']:
                     data2[name] = x['properties'][
                         'ucldc_schema:creator'][creatnumb]['name']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -377,7 +377,7 @@ def get_creator(data2, x, all_headers):
                 if x['properties']['ucldc_schema:creator'][creatnumb]['nametype']:
                     data2[name] = x['properties'][
                         'ucldc_schema:creator'][creatnumb]['nametype']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -386,7 +386,7 @@ def get_creator(data2, x, all_headers):
                 if x['properties']['ucldc_schema:creator'][creatnumb]['role']:
                     data2[name] = x['properties'][
                         'ucldc_schema:creator'][creatnumb]['role']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -395,7 +395,7 @@ def get_creator(data2, x, all_headers):
                 if x['properties']['ucldc_schema:creator'][creatnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:creator'][creatnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -404,12 +404,12 @@ def get_creator(data2, x, all_headers):
                 if x['properties']['ucldc_schema:creator'][creatnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:creator'][creatnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             creatnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Creator 1 Name'] = ''
         data2['Creator 1 Name Type'] = ''
         data2['Creator 1 Role'] = ''
@@ -428,7 +428,7 @@ def get_contributor(data2, x, all_headers):
                 if x['properties']['ucldc_schema:contributor'][contnumb]['name']:
                     data2[name] = x['properties'][
                         'ucldc_schema:contributor'][contnumb]['name']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -437,7 +437,7 @@ def get_contributor(data2, x, all_headers):
                 if x['properties']['ucldc_schema:contributor'][contnumb]['nametype']:
                     data2[name] = x['properties'][
                         'ucldc_schema:contributor'][contnumb]['nametype']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -446,7 +446,7 @@ def get_contributor(data2, x, all_headers):
                 if x['properties']['ucldc_schema:contributor'][contnumb]['role']:
                     data2[name] = x['properties'][
                         'ucldc_schema:contributor'][contnumb]['role']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -455,7 +455,7 @@ def get_contributor(data2, x, all_headers):
                 if x['properties']['ucldc_schema:contributor'][contnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:contributor'][contnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -464,12 +464,12 @@ def get_contributor(data2, x, all_headers):
                 if x['properties']['ucldc_schema:contributor'][contnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:contributor'][contnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             contnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Contributor 1 Name'] = ''
         data2['Contributor 1 Name Type'] = ''
         data2['Contributor 1 Role'] = ''
@@ -480,7 +480,7 @@ def get_contributor(data2, x, all_headers):
 def get_format(data2, x, all_headers):
     if x['properties']['ucldc_schema:physdesc']:
         data2['Format/Physical Description'] = x['properties']['ucldc_schema:physdesc']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Format/Physical Description'] = ''
 
 
@@ -495,7 +495,7 @@ def get_description(data2, x, all_headers):
                 if x['properties']['ucldc_schema:description'][descnumb]['item']:
                     data2[name] = x['properties'][
                         'ucldc_schema:description'][descnumb]['item']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -504,12 +504,12 @@ def get_description(data2, x, all_headers):
                 if x['properties']['ucldc_schema:description'][descnumb]['type']:
                     data2[name] = x['properties'][
                         'ucldc_schema:description'][descnumb]['type']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             descnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Description 1 Note'] = ''
         data2['Description 1 Type'] = ''
 
@@ -517,7 +517,7 @@ def get_description(data2, x, all_headers):
 def get_extent(data2, x, all_headers):
     if x['properties']['ucldc_schema:extent']:
         data2['Extent'] = x['properties']['ucldc_schema:extent']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Extent'] = ''
 
 
@@ -532,7 +532,7 @@ def get_language(data2, x, all_headers):
                 if x['properties']['ucldc_schema:language'][langnumb]['language']:
                     data2[name] = x['properties'][
                         'ucldc_schema:language'][langnumb]['language']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -541,12 +541,12 @@ def get_language(data2, x, all_headers):
                 if x['properties']['ucldc_schema:language'][langnumb]['code']:
                     data2[name] = x['properties'][
                         'ucldc_schema:language'][langnumb]['code']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             langnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Language 1'] = ''
         data2['Language 1 Code'] = ''
 
@@ -561,14 +561,14 @@ def get_temporal_coverage(data2, x, all_headers):
             data2[name] = x['properties'][
                 'ucldc_schema:temporalcoverage'][tempnumb]
             tempnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Temporal Coverage 1'] = ''
 
 
 def get_transcription(data2, x, all_headers):
     if x['properties']['ucldc_schema:transcription']:
         data2['Transcription'] = x['properties']['ucldc_schema:transcription']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Transcription'] = ''
 
 
@@ -576,7 +576,7 @@ def get_access_restrictions(data2, x, all_headers):
     if x['properties']['ucldc_schema:accessrestrict']:
         data2['Access Restrictions'] = x['properties'][
             'ucldc_schema:accessrestrict']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Access Restrictions'] = ''
 
 
@@ -584,7 +584,7 @@ def get_rights_statement(data2, x, all_headers):
     if x['properties']['ucldc_schema:rightsstatement']:
         data2['Copyright Statement'] = x['properties'][
             'ucldc_schema:rightsstatement']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Statement'] = ''
 
 
@@ -592,7 +592,7 @@ def get_rights_status(data2, x, all_headers):
     if x['properties']['ucldc_schema:rightsstatus']:
         data2['Copyright Status'] = x['properties'][
             'ucldc_schema:rightsstatus']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Status'] = ''
 
 
@@ -607,7 +607,7 @@ def get_copyright_holder(data2, x, all_headers):
                 if x['properties']['ucldc_schema:rightsholder'][rightsnumb]['name']:
                     data2[name] = x['properties'][
                         'ucldc_schema:rightsholder'][rightsnumb]['name']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -616,7 +616,7 @@ def get_copyright_holder(data2, x, all_headers):
                 if x['properties']['ucldc_schema:rightsholder'][rightsnumb]['nametype']:
                     data2[name] = x['properties'][
                         'ucldc_schema:rightsholder'][rightsnumb]['nametype']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -625,7 +625,7 @@ def get_copyright_holder(data2, x, all_headers):
                 if x['properties']['ucldc_schema:rightsholder'][rightsnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:rightsholder'][rightsnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -634,12 +634,12 @@ def get_copyright_holder(data2, x, all_headers):
                 if x['properties']['ucldc_schema:rightsholder'][rightsnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:rightsholder'][rightsnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             rightsnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Holder 1 Name'] = ''
         data2['Copyright Holder 1 Name Type'] = ''
         data2['Copyright Holder 1 Source'] = ''
@@ -650,42 +650,42 @@ def get_copyright_info(data2, x, all_headers):
     if x['properties']['ucldc_schema:rightscontact']:
         data2['Copyright Contact'] = x['properties'][
             'ucldc_schema:rightscontact']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Contact'] = ''
 
     if x['properties']['ucldc_schema:rightsnotice']:
         data2['Copyright Notice'] = x['properties'][
             'ucldc_schema:rightsnotice']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Notice'] = ''
 
     if x['properties']['ucldc_schema:rightsdeterminationdate']:
         data2['Copyright Determination Date'] = x['properties'][
             'ucldc_schema:rightsdeterminationdate']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Determination Date'] = ''
 
     if x['properties']['ucldc_schema:rightsstartdate']:
         data2['Copyright Start Date'] = x['properties'][
             'ucldc_schema:rightsstartdate']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Start Date'] = ''
 
     if x['properties']['ucldc_schema:rightsenddate']:
         data2['Copyright End Date'] = x['properties'][
             'ucldc_schema:rightsenddate']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright End Date'] = ''
 
     if x['properties']['ucldc_schema:rightsjurisdiction']:
         data2['Copyright Jurisdiction'] = x['properties'][
             'ucldc_schema:rightsjurisdiction']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Jurisdiction'] = ''
 
     if x['properties']['ucldc_schema:rightsnote']:
         data2['Copyright Note'] = x['properties']['ucldc_schema:rightsnote']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Copyright Note'] = ''
 
 
@@ -698,7 +698,7 @@ def get_collection(data2, x, all_headers):
             name = 'Collection %d' % numb
             data2[name] = x['properties']['ucldc_schema:collection'][collnumb]
             collnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Collection 1'] = ''
 
 
@@ -712,14 +712,14 @@ def get_related_resource(data2, x, all_headers):
             data2[name] = x['properties'][
                 'ucldc_schema:relatedresource'][relnumb]
             relnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Related Resource 1'] = ''
 
 
 def get_source(data2, x, all_headers):
     if x['properties']['ucldc_schema:source']:
         data2['Source'] = x['properties']['ucldc_schema:source']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Source'] = ''
 
 
@@ -734,7 +734,7 @@ def get_subject_name(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjectname'][subnumb]['name']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjectname'][subnumb]['name']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -743,7 +743,7 @@ def get_subject_name(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjectname'][subnumb]['name_type']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjectname'][subnumb]['name_type']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -752,7 +752,7 @@ def get_subject_name(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjectname'][subnumb]['role']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjectname'][subnumb]['role']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -761,7 +761,7 @@ def get_subject_name(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjectname'][subnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjectname'][subnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -770,12 +770,12 @@ def get_subject_name(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjectname'][subnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjectname'][subnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             subnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Subject (Name) 1 Name'] = ''
         data2['Subject (Name) 1 Name Type'] = ''
         data2['Subject (Name) 1 Role'] = ''
@@ -794,7 +794,7 @@ def get_place(data2, x, all_headers):
                 if x['properties']['ucldc_schema:place'][plcnumb]['name']:
                     data2[name] = x['properties'][
                         'ucldc_schema:place'][plcnumb]['name']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -803,7 +803,7 @@ def get_place(data2, x, all_headers):
                 if x['properties']['ucldc_schema:place'][plcnumb]['coordinates']:
                     data2[name] = x['properties'][
                         'ucldc_schema:place'][plcnumb]['coordinates']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -812,7 +812,7 @@ def get_place(data2, x, all_headers):
                 if x['properties']['ucldc_schema:place'][plcnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:place'][plcnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -821,12 +821,12 @@ def get_place(data2, x, all_headers):
                 if x['properties']['ucldc_schema:place'][plcnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:place'][plcnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             plcnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Place 1 Name'] = ''
         data2['Place 1 Coordinates'] = ''
         data2['Place 1 Source'] = ''
@@ -844,7 +844,7 @@ def get_subject_topic(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjecttopic'][topnumb]['heading']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjecttopic'][topnumb]['heading']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -853,7 +853,7 @@ def get_subject_topic(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjecttopic'][topnumb]['headingtype']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjecttopic'][topnumb]['headingtype']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -862,7 +862,7 @@ def get_subject_topic(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjecttopic'][topnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjecttopic'][topnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -871,12 +871,12 @@ def get_subject_topic(data2, x, all_headers):
                 if x['properties']['ucldc_schema:subjecttopic'][topnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:subjecttopic'][topnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             topnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Subject (Topic) 1 Heading'] = ''
         data2['Subject (Topic) 1 Heading Type'] = ''
         data2['Subject (Topic) 1 Source'] = ''
@@ -894,7 +894,7 @@ def get_form_genre(data2, x, all_headers):
                 if x['properties']['ucldc_schema:formgenre'][formnumb]['heading']:
                     data2[name] = x['properties'][
                         'ucldc_schema:formgenre'][formnumb]['heading']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -903,7 +903,7 @@ def get_form_genre(data2, x, all_headers):
                 if x['properties']['ucldc_schema:formgenre'][formnumb]['source']:
                     data2[name] = x['properties'][
                         'ucldc_schema:formgenre'][formnumb]['source']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
@@ -912,12 +912,12 @@ def get_form_genre(data2, x, all_headers):
                 if x['properties']['ucldc_schema:formgenre'][formnumb]['authorityid']:
                     data2[name] = x['properties'][
                         'ucldc_schema:formgenre'][formnumb]['authorityid']
-                elif all_headers.lower() == 'y':
+                elif all_headers:
                     data2[name] = ''
             except:
                 pass
             formnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Form/Genre 1 Heading'] = ''
         data2['Form/Genre 1 Source'] = ''
         data2['Form/Genre 1 Authority ID'] = ''
@@ -932,7 +932,7 @@ def get_provenance(data2, x, all_headers):
             name = 'Provenance %d' % numb
             data2[name] = x['properties']['ucldc_schema:provenance'][provnumb]
             provnumb += 1
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Provenance 1'] = ''
 
 
@@ -940,7 +940,7 @@ def get_physical_location(data2, x, all_headers):
     if x['properties']['ucldc_schema:physlocation']:
         data2['Physical Location'] = x['properties'][
             'ucldc_schema:physlocation']
-    elif all_headers.lower() == 'y':
+    elif all_headers:
         data2['Physical Location'] = ''
 
 if __name__ == "__main__":
