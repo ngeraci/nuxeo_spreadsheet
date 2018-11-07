@@ -39,11 +39,10 @@ def main(args=None):
     if args is None:
         args = parser.parse_args()
 
-    if 'O' in args.level[0] or 'o' in args.level[0]:
+    if args.level[0].lower() == 'o':
         if 'http' in args.url[0]:
             try:
-                google_object(args.path[0], args.url[
-                              0], args.all_headers[0])
+                google_object(args.path[0], args.url[0], args.all_headers[0])
             except:
                 print("""\n*********\nWriting to Google document did not work.
                       Make sure that Google document has been shared with API key email address""")
@@ -54,7 +53,7 @@ def main(args=None):
                 writer.writeheader()
                 for row in obj['data']:
                     writer.writerow(row)
-    if 'I' in args.level[0] or 'i' in args.level[0]:
+    if args.level[0].lower() == 'i':
         if 'http' in args.url[0]:
             try:
                 google_item(args.path[0], args.url[0], args.all_headers[0])
